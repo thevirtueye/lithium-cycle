@@ -277,4 +277,10 @@ See `CONTRIBUTING.md` for details.
 
 ## License
 
-MIT — see `LICENSE`.
+This project is released under the **MIT License**.  
+Free to use for educational and research purposes. Please credit the author where applicable.
+
+
+## Author
+
+Created by **Alberto Cirillo** — 2026
