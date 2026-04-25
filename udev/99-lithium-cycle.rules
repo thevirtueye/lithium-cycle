@@ -1,0 +1,11 @@
+# Trigger lithium-cycle on power-supply events:
+#   - AC adapter plugged/unplugged
+#   - Battery capacity change
+#
+# udev fires "change" events on the power_supply subsystem for both. We use
+# `RUN+="..."` via systemctl to start the service unit (which is hardened),
+# rather than running the script directly from udev (which would inherit
+# udev's restricted environment).
+
+SUBSYSTEM=="power_supply", ACTION=="change", \
+    RUN+="/usr/bin/systemctl --no-block start lithium-cycle.service"

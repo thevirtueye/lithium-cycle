@@ -1,0 +1,52 @@
+[Unit]
+Description=Charge threshold manager (monthly full-charge automation)
+Documentation=https://github.com/thevirtueye/lithium-cycle
+# Run after the battery device is available.
+After=systemd-udev-settle.service
+# We need /var to be writable for the state file.
+RequiresMountsFor=/var/lib
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/lithium-cycle
+# The script must be able to write to /sys and /var/lib/lithium-cycle.
+# We tighten everything else.
+
+# Filesystem hardening
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/sys/class/power_supply /var/lib/lithium-cycle
+PrivateTmp=true
+PrivateDevices=false
+ProtectKernelTunables=false
+ProtectKernelModules=true
+ProtectKernelLogs=true
+ProtectControlGroups=true
+ProtectClock=true
+ProtectHostname=true
+ProtectProc=invisible
+ProcSubset=pid
+
+# Capability hardening — the script only writes to two sysfs files and one
+# state file, and reads /sys. It needs no special capabilities.
+CapabilityBoundingSet=
+AmbientCapabilities=
+NoNewPrivileges=true
+
+# Network hardening — no network needed.
+PrivateNetwork=true
+RestrictAddressFamilies=AF_UNIX
+IPAddressDeny=any
+
+# Process hardening
+RestrictNamespaces=true
+RestrictRealtime=true
+RestrictSUIDSGID=true
+LockPersonality=true
+MemoryDenyWriteExecute=true
+SystemCallArchitectures=native
+SystemCallFilter=@system-service
+SystemCallFilter=~@privileged @resources @mount
+
+[Install]
+WantedBy=multi-user.target

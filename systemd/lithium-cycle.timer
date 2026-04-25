@@ -1,0 +1,14 @@
+[Unit]
+Description=Daily charge threshold evaluation
+Documentation=https://github.com/thevirtueye/lithium-cycle
+
+[Timer]
+# Trigger every day at 00:01 local time. Persistent=true ensures that if the
+# system was off at the scheduled time, the service runs at next boot.
+OnCalendar=*-*-* 00:01:00
+Persistent=true
+AccuracySec=1min
+Unit=lithium-cycle.service
+
+[Install]
+WantedBy=timers.target
