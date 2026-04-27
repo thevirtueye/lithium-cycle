@@ -6,7 +6,7 @@
 [![Init](https://img.shields.io/badge/Init-systemd-red.svg)](#)
 [![Version](https://img.shields.io/badge/Version-v1.0.0-orange.svg)](https://github.com/thevirtueye/lithium-cycle/releases)
 
-**Monthly full-charge automation for Linux laptops.**
+**Monthly full-charge automation for Linux laptops, developed and tested on Fedora.**
 
 Lithium-ion batteries last longer when kept around 80 %, but they should
 still be cycled to 100 % occasionally so that the firmware fuel gauge stays
@@ -40,29 +40,6 @@ That's it. From now on the system runs itself.
 Two requirements: your **operating system** must be a modern Linux distro,
 and your **laptop firmware** must expose a writable charge threshold to the
 kernel.
-
-### Operating system
-
-Any Linux distribution that uses **systemd** as init and **udev** as the
-device manager. That covers practically every mainstream distro:
-
-| Distro                        | Status         |
-| ----------------------------- | -------------- |
-| Fedora (any recent)           | Tested         |
-| Ubuntu / Kubuntu / Lubuntu    | Should work \* |
-| Debian (recent)               | Should work \* |
-| Arch / Manjaro / EndeavourOS  | Should work \* |
-| openSUSE Tumbleweed / Leap    | Should work \* |
-| Pop!_OS, Linux Mint, Zorin    | Should work \* |
-| **Devuan, Artix, Void, MX**   | Not supported  |
-| **Alpine Linux**              | Not supported  |
-
-\* Should work means: it uses the same systemd + udev + bash stack as
-Fedora, but the maintainer hasn't personally tested it. Feedback welcome
-via GitHub Issues.
-
-The four "Not supported" rows above either don't use systemd by default
-or use musl/busybox in ways that break the install scripts.
 
 ### Hardware
 
@@ -265,17 +242,6 @@ You can audit the sandbox profile with:
 ```bash
 systemd-analyze security lithium-cycle.service
 ```
-
----
-
-## Contributing
-
-Issues and pull requests welcome. Please:
-
-- Run `./tests/test-dryrun.sh` and `shellcheck src/*.sh install.sh
-  uninstall.sh tests/*.sh` before submitting.
-- For hardware compatibility reports, include `uname -r`, the laptop
-  vendor/model, and the output of `ls /sys/class/power_supply/`.
 
 ---
 
